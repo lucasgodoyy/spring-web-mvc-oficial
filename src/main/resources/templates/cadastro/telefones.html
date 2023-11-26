@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<title>Insert title here</title>
+		
+		<!-- MATERIALIZE -->
+		<!--Import Google Icon Font-->
+    	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    	
+   	    <!--Import materialize.css-->
+        <link type="text/css" rel="stylesheet" href="/materialize/css/materialize.css" media="screen,projection"/>
+        <link type="text/css" rel="stylesheet" href="/materialize/css/materialize.min.css" media="screen,projection"/>
+        
+        
+        
+        <style type="text/css">
+        	table.striped>tbody>tr:nth-child(odd) {
+        		background-color: rgba(158, 154, 154, 0.5);
+        	}
+        	
+        	form input[type=submit] {
+        		color: white;
+        	}
+        </style>
+	</head>
+	<body>
+		<h4>Spring Boot + Thymeleaf + Material Design Lite</h4><br />
+		<h5>Telefones</h5>
+		<br />
+		<br />
+		<a class="waves-effect waves-light btn" href="/cadastropessoa">Cadastro Pessoa</a>
+		<br />
+		<br />
+		<div th:each="p: ${pessoaobj}">
+			<div class="row">
+				<p>ID: <span th:text="${p.id}"></span></p><br />
+				<p>Nome: <span th:text="${p.nome}"></span></p><br />
+				<p>Sobrenome: <span th:text="${p.sobrenome}"></span></p><br />
+				<p>Idade: <span th:text="${p.idade}"></span></p>
+			</div>
+		</div>
+		
+		
+	
+	   <script type="text/javascript" src="/materialize/js/materialize.min.js"></script>
+	<script type="text/javascript" src="/materialize/js/materialize.js"></script>  
+	</body>
+</html>
