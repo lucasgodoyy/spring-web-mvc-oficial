@@ -4,11 +4,16 @@ import java.io.IOException;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import br.com.lucasdeveloper.springboot.model.Pessoa;
@@ -59,6 +64,27 @@ public class PessoaController {
 		return modelAndView;
 	}
 	
+	@GetMapping("/removerpessoa/{idpessoa}")
+	public ModelAndView excluir(@PathVariable("idpessoa") Long idpessoa) {
+		
+		pessoaRepository.deleteById(idpessoa) ;
+		
+		ModelAndView modelAndView = new ModelAndView("cadastro/cadastropessoa");
+		
+		modelAndView.addObject("pessoaobj", pessoaRepository.findAll ());
+		modelAndView.addObject("pessoaobj", new Pessoa());
+		return modelAndView;
+	}
 	
+	
+	@PostMapping("**/pesquisarpessoa")
+	public ModelAndView pesquisar(
+			@RequestParam("nomepesquisa") String nomepesquisa) {
+		
+		ModelAndView modelAndView = new ModelAndView("cadastro/cadastroPessoa");
+		modelAndView.addObject("pessoas", pessoaRepository.findByName(nomepesquisa));
+		modelAndView.addObject("pessoaobj", new Pessoa());
+		return modelAndView;
+	}
 	
 }

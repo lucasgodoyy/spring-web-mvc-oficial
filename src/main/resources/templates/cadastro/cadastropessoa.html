@@ -28,20 +28,38 @@
 		<input name="sobrenome" th:field="*{sobrenome}">
 		<label>Idade</label>
 		<input name="idade" th:field="*{idade}">
+		<br/>
 		<input class="waves-effect waves-light btn" type="submit" value="Salvar">
 		
 	</form>
 
+<br/>
+<br/>
 <a href="/listapessoas">Listar Pessoas</a>
+<br/>
+<br/>
 
+<form action="pesquisarpessoa" method="post">
+	<label>Pesquisar por nome:</label>
+	<input name="nomepesquisa">
+	<input class="waves-effect waves-light btn" type="submit" value="Buscar">
+		
+</form>
+
+
+
+<br/>
+<br/>
 <table>
 	<tr th:each = "pessoa : ${pessoas}" >
 		<td th:text = "${pessoa.id}"></td>
 		<td th:text = "${pessoa.nome}"></td>
 		<td th:text = "${pessoa.sobrenome}"></td>
-		
+		<td th:text = "${pessoa.idade}"></td>
 		<td><a th:href="@{/editarpessoa/{idpessoa}(idpessoa=${pessoa.id})}">Editar</a></td>
+		<td><a th:href="@{/removerpessoa/{idpessoa}(idpessoa=${pessoa.id})}">Excluir</a></td>
 	</tr>
+	
 	
 	
 </table>
