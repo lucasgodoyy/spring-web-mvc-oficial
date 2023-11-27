@@ -33,6 +33,18 @@
 	<h5>Cadastro de Pessoas</h5>
 
 	<div class="row">
+		
+		<br/>
+		
+	<div th:each = "m : ${msg}">
+					<span th:text="${m}" style="color: red"></span>
+				</div>
+	</div>
+		
+		
+		
+		<br/>
+		
 		<form action="salvarpessoa" id="formpessoa" method="post" th:object="${pessoaobj}" class="col s12">
 
 			<div class="row">

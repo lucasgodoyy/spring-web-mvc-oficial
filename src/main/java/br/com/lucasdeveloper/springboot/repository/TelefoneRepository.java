@@ -14,6 +14,6 @@ import br.com.lucasdeveloper.springboot.model.Telefone;
 public interface TelefoneRepository extends CrudRepository<Telefone, Long> {
 	
 	@Query("select t from Telefone t where t.pessoa.id = ?1")
-	public List<Telefone> getTelefones(Long pessoaId);
+	public List<Telefone> getTelefones(Long pessoaid);
 
 }
