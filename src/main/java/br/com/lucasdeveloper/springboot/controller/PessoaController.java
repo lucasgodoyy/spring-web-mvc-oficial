@@ -8,6 +8,7 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
@@ -111,11 +112,19 @@ public class PessoaController {
 	
 	
 	@PostMapping("**/pesquisarpessoa")
-	public ModelAndView pesquisar(
-			@RequestParam("nomepesquisa") String nomepesquisa) {
+	public ModelAndView pesquisar(@RequestParam("nomepesquisa") String nomepesquisa,
+			@RequestParam("sexoPesquisa") String sexoPesquisa) {
+		
+List<Pessoa> pessoas = new ArrayList<Pessoa>();
+		
+		if (sexoPesquisa != null && !sexoPesquisa.isEmpty() ) {
+			pessoas = pessoaRepository.findByNameSexo(nomepesquisa, sexoPesquisa);
+		} else{ 
+			pessoas = pessoaRepository.findByName(nomepesquisa);
+		}
 		
 		ModelAndView modelAndView = new ModelAndView("cadastro/cadastroPessoa");
-		modelAndView.addObject("pessoas", pessoaRepository.findByName(nomepesquisa));
+		modelAndView.addObject("pessoas", pessoas);
 		modelAndView.addObject("pessoaobj", new Pessoa());
 		return modelAndView;
 	}
