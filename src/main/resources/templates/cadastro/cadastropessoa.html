@@ -6,15 +6,27 @@
 	<meta charset="UTF-8">
 	<title>Insert title here</title>
 
+<!-- Adicionando JQuery -->
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"
+	integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+
 	<!-- MATERIALIZE -->
 	<!--Import Google Icon Font-->
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-	<!--Import materialize.css-->
+	<!--Import materialize.css
 	<link type="text/css" rel="stylesheet" href="/materialize/css/materialize.css" media="screen,projection" />
-	<link type="text/css" rel="stylesheet" href="/materialize/css/materialize.min.css" media="screen,projection" />
+	<link type="text/css" rel="stylesheet" href="/materialize/css/materialize.min.css" media="screen,projection" /> -->
 
+<!-- Compiled and minified CSS -->
+	    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 
+<!-- Compiled and minified JavaScript -->
+    	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    	
+    	<!--Let browser know website is optimized for mobile-->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    	
 		<style type="text/css">
 			table.striped>tbody>tr:nth-child(odd) {
 				background-color: rgba(158, 154, 154, 0.5);
@@ -70,14 +82,57 @@
 				</div>
 			</div>
 			
-			
-			<div class="row">
-			
-				<div class="input-field col s12">
+			<div class="input-field col s12">
 					<label for="idade" class="active">Idade</label>
 					<input name="idade" th:field="*{idade}" id="idade" class="validade">
 				</div>
 			</div>
+			
+			<div class="row">
+						<div class="input-field col s12">
+							<label for="cep" class="active">CEP</label>
+							<input name="cep" th:field="*{cep}" id="cep" class="validate" />
+						</div>
+					</div>
+			
+			<div class="row">
+						<div class="input-field col s12">
+							<label for="rua" class="active">Rua</label>
+							<input name="rua" th:field="*{rua}" id="rua" class="validate" />
+						</div>
+					</div>
+					
+					<div class="row">
+						<div class="input-field col s12">
+							<label for="bairro" class="active">Bairro</label>
+							<input name="bairro" th:field="*{bairro}" id="bairro" class="validate" />
+						</div>
+					</div>
+					
+					<div class="row">
+						<div class="input-field col s12">
+							<label for="cidade" class="active">Cidade</label>
+							<input name="cidade" th:field="*{cidade}" id="cidade" class="validate" />
+						</div>
+					</div>	
+					
+					<div class="row">
+						<div class="input-field col s12">
+							<label for="uf" class="active">UF</label>
+							<input name="uf" th:field="*{uf}" id="uf" class="validate" />
+						</div>
+					</div>		
+					
+					<div class="row">
+						<div class="input-field col s12">
+							<label for="ibge" class="active">IBGE</label>
+							<input name="ibge" th:field="*{ibge}" id="ibge" class="validate" />
+						</div>
+					</div>					
+			
+			<div class="row" sec:authorize="hasRole('ROLE_ADMIN')">
+			
+				
 			
 			
 			<br />
@@ -147,8 +202,8 @@
 	
 	
 
-	<script type="text/javascript" src="/materialize/js/materialize.min.js"></script>
-	<script type="text/javascript" src="/materialize/js/materialize.js"></script>
+	<!-- <script type="text/javascript" src="/materialize/js/materialize.min.js"></script>
+	<script type="text/javascript" src="/materialize/js/materialize.js"></script> -->
 </body>
 
 </html>
