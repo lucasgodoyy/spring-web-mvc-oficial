@@ -68,7 +68,7 @@
 
 				<div class="input-fiel col s6">
 					<label for="nome" class="active">Nome</label>
-					<input name="nome" th:field="*{nome}" id="nome" class="validade">
+					<input name="nome"  th:field="*{nome}" id="nome" class="validade" placeholder="Informe o nome...">
 				</div>
 
 			</div>
@@ -76,61 +76,73 @@
 			
 			<div class="row">
 			
-				<div class="input-field col s12">
+				<div class="input-field col s6">
 					<label for="sobrenome" class="active">Sobrenome</label>
-					<input name="sobrenome" th:field="*{sobrenome}" id="sobrenome" class="validade">
+					<input name="sobrenome" th:field="*{sobrenome}" id="sobrenome" class="validade" placeholder="Informe o sobrenome...">
 				</div>
+				
+				<div class="input-field col s6">
+							<label for="sexo" class="active">Sexo</label>
+							<select class="browser-default" th:field="*{sexo}" >
+								<option value="" disabled selected > --[Selecione]--</option>
+								<option value="MASCULINO" th:text="Masculino"/>
+								<option value="FEMININO" th:text="Feminino"/>
+							</select>
+						</div>
+				
 			</div>
+			
+			
 			
 			<div class="input-field col s12">
 					<label for="idade" class="active">Idade</label>
-					<input name="idade" th:field="*{idade}" id="idade" class="validade">
+					<input name="idade" th:field="*{idade}" id="idade" class="validade" placeholder="Informe a idade...">
 				</div>
 			</div>
 			
 			<div class="row">
 						<div class="input-field col s12">
 							<label for="cep" class="active">CEP</label>
-							<input name="cep" th:field="*{cep}" id="cep" class="validate" />
+							<input name="cep" th:field="*{cep}" id="cep" class="validate" placeholder="Informe o CEP..." />
 						</div>
 					</div>
 			
 			<div class="row">
 						<div class="input-field col s12">
 							<label for="rua" class="active">Rua</label>
-							<input name="rua" th:field="*{rua}" id="rua" class="validate" />
+							<input name="rua" th:field="*{rua}" id="rua" class="validate" placeholder="Informe a rua..." />
 						</div>
 					</div>
 					
 					<div class="row">
 						<div class="input-field col s12">
 							<label for="bairro" class="active">Bairro</label>
-							<input name="bairro" th:field="*{bairro}" id="bairro" class="validate" />
+							<input name="bairro" th:field="*{bairro}" id="bairro" class="validate" placeholder="Informe o bairro..." />
 						</div>
 					</div>
 					
 					<div class="row">
 						<div class="input-field col s12">
 							<label for="cidade" class="active">Cidade</label>
-							<input name="cidade" th:field="*{cidade}" id="cidade" class="validate" />
+							<input name="cidade" th:field="*{cidade}" id="cidade" class="validate" placeholder="Informe a cidade..." />
 						</div>
 					</div>	
 					
 					<div class="row">
 						<div class="input-field col s12">
 							<label for="uf" class="active">UF</label>
-							<input name="uf" th:field="*{uf}" id="uf" class="validate" />
+							<input name="uf" th:field="*{uf}" id="uf" class="validate" placeholder="Informe UF do Estado..." />
 						</div>
 					</div>		
 					
 					<div class="row">
 						<div class="input-field col s12">
 							<label for="ibge" class="active">IBGE</label>
-							<input name="ibge" th:field="*{ibge}" id="ibge" class="validate" />
+							<input name="ibge" th:field="*{ibge}" id="ibge" class="validate" placeholder="Informe o IBGE..." /> 
 						</div>
 					</div>					
 			
-			<div class="row" sec:authorize="hasRole('ROLE_ADMIN')">
+			<div class="row" >
 			
 				
 			
@@ -199,7 +211,78 @@
 
 	</table>
 	
+	 <!-- Adicionando Javascript -->
+	    <script type="text/javascript" >
 	
+	        $(document).ready(function() {
+	        	
+	        	$('#dataNascimento').datepicker({
+	        		showOthermonths:true,
+	        		format: 'yyyy-mm-dd'
+	        	});
+	
+	            function limpa_formulário_cep() {
+	                // Limpa valores do formulário de cep.
+	                $("#rua").val("");
+	                $("#bairro").val("");
+	                $("#cidade").val("");
+	                $("#uf").val("");
+	                $("#ibge").val("");
+	            }
+	            
+	            //Quando o campo cep perde o foco.
+	            $("#cep").blur(function() {
+	
+	                //Nova variável "cep" somente com dígitos.
+	                var cep = $(this).val().replace(/\D/g, '');
+	
+	                //Verifica se campo cep possui valor informado.
+	                if (cep != "") {
+	
+	                    //Expressão regular para validar o CEP.
+	                    var validacep = /^[0-9]{8}$/;
+	
+	                    //Valida o formato do CEP.
+	                    if(validacep.test(cep)) {
+	
+	                        //Preenche os campos com "..." enquanto consulta webservice.
+	                        $("#rua").val("...");
+	                        $("#bairro").val("...");
+	                        $("#cidade").val("...");
+	                        $("#uf").val("...");
+	                        $("#ibge").val("...");
+	
+	                        //Consulta o webservice viacep.com.br/
+	                        $.getJSON("https://viacep.com.br/ws/"+ cep +"/json/?callback=?", function(dados) {
+	
+	                            if (!("erro" in dados)) {
+	                                //Atualiza os campos com os valores da consulta.
+	                                $("#rua").val(dados.logradouro);
+	                                $("#bairro").val(dados.bairro);
+	                                $("#cidade").val(dados.localidade);
+	                                $("#uf").val(dados.uf);
+	                                $("#ibge").val(dados.ibge);
+	                            } //end if.
+	                            else {
+	                                //CEP pesquisado não foi encontrado.
+	                                limpa_formulário_cep();
+	                                alert("CEP não encontrado.");
+	                            }
+	                        });
+	                    } //end if.
+	                    else {
+	                        //cep é inválido.
+	                        limpa_formulário_cep();
+	                        alert("Formato de CEP inválido.");
+	                    }
+	                } //end if.
+	                else {
+	                    //cep sem valor, limpa formulário.
+	                    limpa_formulário_cep();
+	                }
+	            });
+	        });	
+	    </script>
 	
 
 	<!-- <script type="text/javascript" src="/materialize/js/materialize.min.js"></script>
